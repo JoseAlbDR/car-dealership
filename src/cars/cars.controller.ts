@@ -9,12 +9,7 @@ import {
   Patch,
 } from '@nestjs/common';
 import { CarsService } from './cars.service';
-
-export interface ICar {
-  id: number;
-  brand: string;
-  model: string;
-}
+import { ICar } from './interfaces/car.interface';
 
 @Controller('cars')
 export class CarsController {

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ICar } from './cars.controller';
+import { ICar } from './interfaces/car.interface';
 
 @Injectable()
 export class CarsService {

@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ICar } from './interfaces/car.interface';
 import { v4 as uuid } from 'uuid';
+import { CreateCarDto } from './dto/create-car.dto';
 @Injectable()
 export class CarsService {
   private cars: ICar[] = [
@@ -31,8 +32,9 @@ export class CarsService {
     return car;
   }
 
-  create(car: ICar) {
-    this.cars.push(car);
+  create(car: CreateCarDto) {
+    const newCar = { id: uuid(), ...car };
+    this.cars.push(newCar);
   }
 
   deleteById(id: string) {

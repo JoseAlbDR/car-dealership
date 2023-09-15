@@ -51,7 +51,11 @@ export class BrandsService {
     return `This action updates a #${id} brand`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} brand`;
+  remove(id: string) {
+    this.findOne(id);
+
+    this.brands = this.brands.filter((brand) => brand.id !== id);
+
+    return;
   }
 }

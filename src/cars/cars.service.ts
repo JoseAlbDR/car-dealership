@@ -35,6 +35,7 @@ export class CarsService {
   create(car: CreateCarDto) {
     const newCar = { id: uuid(), ...car };
     this.cars.push(newCar);
+    return newCar;
   }
 
   deleteById(id: string) {
@@ -43,6 +44,8 @@ export class CarsService {
     if (!car) throw new NotFoundException(`Car with id ${id} not found`);
 
     this.cars = this.cars.filter((car) => car.id !== id);
+
+    return { message: `Car with id ${id} successfully deleted` };
   }
 
   updateById(id: string, updatedCar: ICar) {

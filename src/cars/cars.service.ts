@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ICar } from './interfaces/car.interface';
 import { v4 as uuid } from 'uuid';
 import { CreateCarDto } from './dto/create-car.dto';
@@ -32,10 +36,19 @@ export class CarsService {
     return car;
   }
 
-  create(car: CreateCarDto) {
-    const newCar = { id: uuid(), ...car };
-    this.cars.push(newCar);
-    return newCar;
+  create(createCarDto: CreateCarDto) {
+    const alreadyExist = this.cars.some(
+      (car) =>
+        car.brand === createCarDto.brand && car.model === createCarDto.model,
+    );
+
+    if (alreadyExist)
+      throw new ConflictException(
+        `Car with brand: ${createCarDto.brand} and model: ${createCarDto.model} already exists`,
+      );
+
+    this.cars = [...this.cars, { id: uuid(), ...createCarDto }];
+    return this.cars.at(-1);
   }
 
   deleteById(id: string) {

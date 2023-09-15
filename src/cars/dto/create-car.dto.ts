@@ -15,15 +15,15 @@ export class UpdateCarDto {
   @IsUUID()
   @IsOptional()
   @IsNotEmpty()
-  readonly id: string;
+  readonly id?: string;
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  readonly brand: string;
+  readonly brand?: string;
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  readonly model: string;
+  readonly model?: string;
 }

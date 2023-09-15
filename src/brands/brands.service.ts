@@ -48,7 +48,7 @@ export class BrandsService {
       return brand;
     });
 
-    return `This action updates a #${id} brand`;
+    return this.findOne(id);
   }
 
   remove(id: string) {

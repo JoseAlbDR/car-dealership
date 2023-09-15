@@ -56,7 +56,7 @@ export class CarsService {
 
     this.cars = this.cars.map((car) => {
       if (car.id === id) {
-        car = { ...car, ...updateCarDto, id: updateCarDto?.id || car.id };
+        car = { ...car, ...updateCarDto, id };
       }
       return car;
     });

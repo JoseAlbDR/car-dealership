@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBrandDto } from './dto/create-brand.dto';
-import { UpdateBrandDto } from './dto/update-brand.dto';
+import { UpdateBrandDto, UpdateBrandDot } from './dto/update-brand.dto';
 import { Brand } from './entities/brand.entity';
 import { v4 as uuid } from 'uuid';
 
@@ -36,7 +36,18 @@ export class BrandsService {
     return brand;
   }
 
-  update(id: number, updateBrandDto: UpdateBrandDto) {
+  update(id: string, updateBrandDto: UpdateBrandDto) {
+    let brandDB = this.findOne(id);
+
+    this.brands = this.brands.map((brand) => {
+      if (brand.id === id) {
+        (brandDB.updatedAt = new Date().getTime()),
+          (brandDB = { ...brandDB, ...updateBrandDto });
+        return brandDB;
+      }
+      return brand;
+    });
+
     return `This action updates a #${id} brand`;
   }
 

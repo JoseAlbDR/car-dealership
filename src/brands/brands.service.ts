@@ -15,7 +15,14 @@ export class BrandsService {
   ];
 
   create(createBrandDto: CreateBrandDto) {
-    return 'This action adds a new brand';
+    const brand: Brand = {
+      id: uuid(),
+      name: createBrandDto.name.toLowerCase(),
+      createdAt: new Date().getTime(),
+    };
+
+    this.brands.push(brand);
+    return brand;
   }
 
   findAll() {

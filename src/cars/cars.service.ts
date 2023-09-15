@@ -41,9 +41,7 @@ export class CarsService {
   }
 
   deleteById(id: string) {
-    const car = this.cars.find((car) => car.id === id);
-
-    if (!car) throw new NotFoundException(`Car with id ${id} not found`);
+    this.findOneById(id);
 
     this.cars = this.cars.filter((car) => car.id !== id);
 
@@ -52,6 +50,7 @@ export class CarsService {
 
   updateById(id: string, updateCarDto: UpdateCarDto) {
     this.findOneById(id);
+
     checkCarEsixts(this.cars, updateCarDto);
 
     this.cars = this.cars.map((car) => {

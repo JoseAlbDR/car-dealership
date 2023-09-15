@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { ICar } from './interfaces/car.interface';
 import { v4 as uuid } from 'uuid';
-import { CreateCarDto } from './dto/create-car.dto';
+import { CreateCarDto, UpdateCarDto } from './dto/create-car.dto';
 @Injectable()
 export class CarsService {
   private cars: ICar[] = [
@@ -61,14 +61,14 @@ export class CarsService {
     return { message: `Car with id ${id} successfully deleted` };
   }
 
-  updateById(id: string, updatedCar: ICar) {
+  updateById(id: string, updateCarDto: UpdateCarDto) {
     const car = this.cars.find((car) => car.id === id);
 
     if (!car) throw new NotFoundException(`Car with id ${id} not found`);
 
     this.cars = this.cars.map((car) => {
       if (car.id === id) {
-        car = { id, ...updatedCar };
+        car = { id, ...updateCarDto };
       }
       return car;
     });

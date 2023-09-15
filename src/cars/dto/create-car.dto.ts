@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateCarDto {
   @IsNotEmpty()
@@ -7,5 +7,19 @@ export class CreateCarDto {
 
   @IsNotEmpty()
   @IsString()
+  readonly model: string;
+}
+
+export class UpdateCarDto {
+  @IsString()
+  @IsUUID()
+  readonly id: string;
+
+  @IsNotEmpty()
+  @IsOptional()
+  readonly brand: string;
+
+  @IsNotEmpty()
+  @IsOptional()
   readonly model: string;
 }

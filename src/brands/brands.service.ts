@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBrandDto } from './dto/create-brand.dto';
-import { UpdateBrandDto, UpdateBrandDot } from './dto/update-brand.dto';
+import { UpdateBrandDto } from './dto/update-brand.dto';
 import { Brand } from './entities/brand.entity';
 import { v4 as uuid } from 'uuid';
 

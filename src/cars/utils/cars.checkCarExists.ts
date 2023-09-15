@@ -1,7 +1,7 @@
 import { ICar, ICheckCar } from '../interfaces/car.interface';
 import { ConflictException } from '@nestjs/common';
 
-export const checkCar = (cars: ICar[], checkCar: ICheckCar) => {
+export const checkCarEsixts = (cars: ICar[], checkCar: ICheckCar) => {
   const alreadyExist = cars.some(
     (car) => car.brand === checkCar.brand && checkCar.model === checkCar.model,
   );

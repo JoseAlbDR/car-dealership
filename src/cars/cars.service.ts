@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ICar } from './interfaces/car.interface';
 import { v4 as uuid } from 'uuid';
 import { CreateCarDto, UpdateCarDto } from './dto';
-import { checkCar } from './utils/cars.checkCar';
+import { checkCarEsixts } from './utils/cars.checkCarExists';
 @Injectable()
 export class CarsService {
   private cars: ICar[] = [
@@ -34,7 +34,7 @@ export class CarsService {
   }
 
   create(createCarDto: CreateCarDto) {
-    checkCar(this.cars, createCarDto);
+    checkCarEsixts(this.cars, createCarDto);
 
     this.cars = [...this.cars, { id: uuid(), ...createCarDto }];
     return this.cars.at(-1);
@@ -52,11 +52,11 @@ export class CarsService {
 
   updateById(id: string, updateCarDto: UpdateCarDto) {
     this.findOneById(id);
-    checkCar(this.cars, updateCarDto);
+    checkCarEsixts(this.cars, updateCarDto);
 
     this.cars = this.cars.map((car) => {
       if (car.id === id) {
-        car = { ...car, id: updateCarDto?.id || car.id, ...updateCarDto };
+        car = { ...car, ...updateCarDto, id: updateCarDto?.id || car.id };
       }
       return car;
     });

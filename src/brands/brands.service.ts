@@ -19,14 +19,14 @@ export class BrandsService {
   }
 
   findAll() {
-    return `This action returns all brands`;
+    return this.brands;
   }
 
   findOne(id: string) {
     const brand = this.brands.find((brand) => brand.id === id);
     if (!brand) throw new NotFoundException(`Brand with id ${id} not found`);
 
-    return `This action returns a #${id} brand`;
+    return brand;
   }
 
   update(id: number, updateBrandDto: UpdateBrandDto) {

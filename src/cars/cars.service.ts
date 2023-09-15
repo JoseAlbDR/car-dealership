@@ -1,11 +1,8 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ICar } from './interfaces/car.interface';
 import { v4 as uuid } from 'uuid';
 import { CreateCarDto, UpdateCarDto } from './dto/create-car.dto';
+import { checkCar } from './utils/cars.checkCar';
 @Injectable()
 export class CarsService {
   private cars: ICar[] = [
@@ -37,15 +34,7 @@ export class CarsService {
   }
 
   create(createCarDto: CreateCarDto) {
-    const alreadyExist = this.cars.some(
-      (car) =>
-        car.brand === createCarDto.brand && car.model === createCarDto.model,
-    );
-
-    if (alreadyExist)
-      throw new ConflictException(
-        `Car with brand: ${createCarDto.brand} and model: ${createCarDto.model} already exists`,
-      );
+    checkCar(this.cars, createCarDto);
 
     this.cars = [...this.cars, { id: uuid(), ...createCarDto }];
     return this.cars.at(-1);
@@ -66,11 +55,19 @@ export class CarsService {
 
     if (!car) throw new NotFoundException(`Car with id ${id} not found`);
 
+    checkCar(this.cars, updateCarDto);
+
     this.cars = this.cars.map((car) => {
       if (car.id === id) {
-        car = { id, ...updateCarDto };
+        car = { id: updateCarDto?.id || car.id, ...updateCarDto };
       }
       return car;
     });
+
+    const updatedCar = this.cars.find(
+      (car) => car.id === updateCarDto?.id || id,
+    );
+
+    return updatedCar;
   }
 }
